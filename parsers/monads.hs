@@ -34,7 +34,7 @@ instance Functor ST where
 
 instance Applicative ST where
 --pure :: ST a
-  pure x = S(\s -> (x,s))
+  pure = return
 --(<*>) :: ST (a -> b) -> ST a -> ST b
   stf <*> stx = do
                   f <- stf
