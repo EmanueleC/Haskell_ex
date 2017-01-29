@@ -4,6 +4,7 @@ notEndLine = sat (/= '\n')
 
 comment :: Parser()
 comment = do
+            space
             string "--"
             many notEndLine
             char '\n'
