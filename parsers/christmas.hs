@@ -4,7 +4,6 @@ notEndLine = sat (/= '\n')
 
 comment :: Parser()
 comment = do
-            space          
             string "--"
             many notEndLine
             char '\n'
@@ -48,6 +47,28 @@ natural2 = do
             space
             return Nat
 
+-- ex 3
+
+-- expr ::= expr - nat | nat
+-- nat ::= 0 | 1 | 2 | ...
+
+expr3 :: Parser Int
+expr3 = do
+          e <- expr3
+          symbol "-"
+          n <- natural
+          return (e - n)
+        <|> do
+              n <- natural
+              return n
+
+expr4 :: Parser Int
+expr4 = do
+          n <- natural
+          ns <- many ( do symbol "-"
+                          natural)
+          return (foldl (-) n ns)
+
 -- ex 4
 fibs::[Integer]
 
@@ -56,3 +77,4 @@ fibs = [help x | x <- [0..]]
 help 0 = 0
 help 1 = 1
 help n = help (n-1) + help (n-2)
+
